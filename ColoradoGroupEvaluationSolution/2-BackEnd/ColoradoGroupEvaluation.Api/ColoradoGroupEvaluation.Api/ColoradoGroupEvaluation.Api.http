@@ -1,0 +1,6 @@
+@ColoradoGroupEvaluation.Api_HostAddress = http://localhost:5146
+
+GET {{ColoradoGroupEvaluation.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
