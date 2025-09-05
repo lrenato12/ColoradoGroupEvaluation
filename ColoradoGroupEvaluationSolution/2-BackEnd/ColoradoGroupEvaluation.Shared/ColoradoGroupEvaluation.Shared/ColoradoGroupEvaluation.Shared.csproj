@@ -8,11 +8,14 @@
 
   <ItemGroup>
     <Folder Include="Models\Cliente\Response\" />
-    <Folder Include="Models\Cliente\Request\" />
     <Folder Include="Models\Telefone\Response\" />
     <Folder Include="Models\Telefone\Request\" />
     <Folder Include="Models\TipoTelefone\Response\" />
     <Folder Include="Models\TipoTelefone\Request\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
   </ItemGroup>
 
 </Project>

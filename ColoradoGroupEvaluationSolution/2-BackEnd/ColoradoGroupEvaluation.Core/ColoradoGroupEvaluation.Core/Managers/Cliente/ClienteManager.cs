@@ -1,7 +1,10 @@
-﻿using ColoradoGroupEvaluation.Core.Base;
+﻿using AutoMapper;
+using ColoradoGroupEvaluation.Core.Base;
 using ColoradoGroupEvaluation.Infra.Cliente;
 using ColoradoGroupEvaluation.Shared.Models.Base.Result;
+using ColoradoGroupEvaluation.Shared.Models.Cliente.Request;
 using Microsoft.AspNetCore.Http;
+using ClienteModel = ColoradoGroupEvaluation.Shared.Models.Cliente.Domain.Cliente;
 
 namespace ColoradoGroupEvaluation.Core.Managers.Cliente;
 
@@ -9,13 +12,16 @@ public class ClienteManager : BaseManager, IClienteManager
 {
     #region [ PROPERTIES ]
     private readonly IClienteDAL _clienteDAL;
+    private readonly IMapper _mapper;
+
     #endregion
 
     #region [ CTOR ]
-    public ClienteManager(IHttpContextAccessor httpContextAccessor, IClienteDAL clienteDAL)
+    public ClienteManager(IHttpContextAccessor httpContextAccessor, IClienteDAL clienteDAL, IMapper mapper)
         : base(httpContextAccessor)
     {
         _clienteDAL = clienteDAL;
+        _mapper = mapper;
     }
 
     public async Task<ApiResultModel> GetById(int clienteId)
@@ -32,9 +38,9 @@ public class ClienteManager : BaseManager, IClienteManager
         return new ApiResultModel().WithSuccess(result);
     }
 
-    public async Task<ApiResultModel> Create(Shared.Models.Cliente.Domain.Cliente requestModel)
+    public async Task<ApiResultModel> Create(ClienteRequestModel requestModel)
     {
-        var result = await _clienteDAL.Create(requestModel);
+        var result = await _clienteDAL.Create(_mapper.Map<ClienteModel>(requestModel));
 
         return new ApiResultModel().WithSuccess(result);
     }
@@ -46,9 +52,9 @@ public class ClienteManager : BaseManager, IClienteManager
         return new ApiResultModel().WithSuccess(result);
     }
 
-    public async Task<ApiResultModel> Update(Shared.Models.Cliente.Domain.Cliente requestModel)
+    public async Task<ApiResultModel> Update(ClienteRequestModel requestModel)
     {
-        var result = await _clienteDAL.Update(requestModel);
+        var result = await _clienteDAL.Update(_mapper.Map<ClienteModel>(requestModel));
 
         return new ApiResultModel().WithSuccess(result);
     }

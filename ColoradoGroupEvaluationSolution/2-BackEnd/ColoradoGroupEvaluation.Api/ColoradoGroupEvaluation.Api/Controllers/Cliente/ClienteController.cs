@@ -1,5 +1,6 @@
 ﻿using ColoradoGroupEvaluation.Api.Controllers.Base;
 using ColoradoGroupEvaluation.Core.Managers.Cliente;
+using ColoradoGroupEvaluation.Shared.Models.Cliente.Request;
 using Microsoft.AspNetCore.Mvc;
 using ClienteModel = ColoradoGroupEvaluation.Shared.Models.Cliente.Domain.Cliente;
 
@@ -34,14 +35,14 @@ public class ClienteController([FromServices] IConfiguration configuration,
     #region [ CREATE ]
     [HttpPost]
     [Route("Create")]
-    public async Task<IActionResult> Create([FromBody] ClienteModel requestModel)
+    public async Task<IActionResult> Create([FromBody] ClienteRequestModel requestModel)
         => Ok(await _clienteManager.Create(requestModel));
     #endregion
 
     #region [ UPDATE ]
     [HttpPut]
     [Route("Update")]
-    public async Task<IActionResult> Update([FromBody] ClienteModel requestModel)
+    public async Task<IActionResult> Update([FromBody] ClienteRequestModel requestModel)
         => Ok(await _clienteManager.Update(requestModel));
     #endregion
 

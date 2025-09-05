@@ -1,4 +1,5 @@
 ﻿using ColoradoGroupEvaluation.Shared.Models.Base.Result;
+using ColoradoGroupEvaluation.Shared.Models.Cliente.Request;
 using ClienteModel = ColoradoGroupEvaluation.Shared.Models.Cliente.Domain.Cliente;
 
 namespace ColoradoGroupEvaluation.Core.Managers.Cliente;
@@ -14,11 +15,11 @@ public interface IClienteManager
     #endregion
 
     #region [ CREATE ]
-    Task<ApiResultModel> Create(ClienteModel requestModel);
+    Task<ApiResultModel> Create(ClienteRequestModel requestModel);
     #endregion
 
     #region [ UPDATE ]
-    Task<ApiResultModel> Update(ClienteModel requestModel);
+    Task<ApiResultModel> Update(ClienteRequestModel requestModel);
     #endregion
 
     #region [ DELETE ]
