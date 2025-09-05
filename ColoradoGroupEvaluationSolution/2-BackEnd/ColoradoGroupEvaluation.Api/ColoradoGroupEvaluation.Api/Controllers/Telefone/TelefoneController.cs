@@ -1,0 +1,55 @@
+﻿using ColoradoGroupEvaluation.Api.Controllers.Base;
+using ColoradoGroupEvaluation.Core.Managers.Telefone;
+using Microsoft.AspNetCore.Mvc;
+using TelefoneModel = ColoradoGroupEvaluation.Shared.Models.Telefone.Domain.Telefone;
+
+namespace ColoradoGroupEvaluation.Api.Controllers.Telefone;
+
+[Route("[controller]")]
+[ApiController]
+public class TelefoneController([FromServices] IConfiguration configuration,
+                            [FromServices] IWebHostEnvironment environment,
+                            [FromServices] IHttpContextAccessor httpContextAccessor,
+                            [FromServices] ITelefoneManager telefoneManager) : BaseController(configuration, environment, httpContextAccessor)
+{
+    #region [ PROPERTIES ]
+    private readonly ITelefoneManager _telefoneManager = telefoneManager;
+    #endregion
+
+    #region [ METHODS ]
+    #region [ GET BY ID ]
+    [HttpGet]
+    [Route("GetById/{id}")]
+    public async Task<IActionResult> GetById([FromRoute] string id)
+        => Ok(await _telefoneManager.GetById(id));
+    #endregion
+
+    #region [ GET ALL ]
+    [HttpGet]
+    [Route("GetAll")]
+    public async Task<IActionResult> GetAll()
+        => Ok(await _telefoneManager.GetAll());
+    #endregion
+
+    #region [ CREATE ]
+    [HttpPost]
+    [Route("Create")]
+    public async Task<IActionResult> Create([FromBody] TelefoneModel requestModel)
+        => Ok(await _telefoneManager.Create(requestModel));
+    #endregion
+
+    #region [ UPDATE ]
+    [HttpPut]
+    [Route("Update")]
+    public async Task<IActionResult> Update([FromBody] TelefoneModel requestModel)
+    => Ok(await _telefoneManager.Update(requestModel));
+    #endregion
+
+    #region [ DELETE ]
+    [HttpDelete]
+    [Route("Delete/{id}")]
+    public async Task<IActionResult> Delete([FromRoute] string id)
+    => Ok(await _telefoneManager.Delete(id));
+    #endregion
+    #endregion
+}
