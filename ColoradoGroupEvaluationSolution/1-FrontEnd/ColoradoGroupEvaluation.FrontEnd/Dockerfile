@@ -13,6 +13,7 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["1-FrontEnd/ColoradoGroupEvaluation.FrontEnd/ColoradoGroupEvaluation.FrontEnd.csproj", "1-FrontEnd/ColoradoGroupEvaluation.FrontEnd/"]
+COPY ["2-BackEnd/ColoradoGroupEvaluation.Shared/ColoradoGroupEvaluation.Shared/ColoradoGroupEvaluation.Shared.csproj", "2-BackEnd/ColoradoGroupEvaluation.Shared/ColoradoGroupEvaluation.Shared/"]
 RUN dotnet restore "./1-FrontEnd/ColoradoGroupEvaluation.FrontEnd/ColoradoGroupEvaluation.FrontEnd.csproj"
 COPY . .
 WORKDIR "/src/1-FrontEnd/ColoradoGroupEvaluation.FrontEnd"

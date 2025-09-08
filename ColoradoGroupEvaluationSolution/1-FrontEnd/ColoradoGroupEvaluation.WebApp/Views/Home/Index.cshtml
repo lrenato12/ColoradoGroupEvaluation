@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div id="minha-tabela"></div>
+
+</div>
+
+@section Scripts{
+    <script>
+        function GetBaseUrl() {
+            return window.location.origin + '/';
+        }
+
+        //#region [ DOM CONTENT LOADED ]
+        document.addEventListener("DOMContentLoaded", function () {
+            // Apenas chame a função que configura e carrega a grade.
+            // O Grid.js fará a chamada AJAX internamente.
+            LoadGrid();
+        });
+        //#endregion
+
+        // O fetchGetHandler manual não é mais necessário para carregar a grade,
+        // mas pode ser mantido se você precisar dele para outras requisições futuras.
+        /*
+        async function fetchGetHandler(url) {
+            const response = await fetch(url, { ... });
+            return await response.json();
+        }
+        */
+
+        //#region [ GRID LOADER ]
+        function LoadGrid() {
+            const apiUrl = `${GetBaseUrl()}Home/GetAllCliente`;
+
+            new gridjs.Grid({
+                columns: [
+                    { id: 'codigoCliente', name: 'codigoCliente' },
+                    { id: 'documento', name: 'documento' },
+                    { id: 'endereco', name: 'Telefone' },
+                    { id: 'uf', name: 'uf' },
+                    { id: 'razaoSocial', name: 'razaoSocial' },
+                    { id: 'nomeFantasia', name: 'nomeFantasia' },
+                ],
+
+                server: {
+                    url: apiUrl,
+                    then: data => {
+                        if (data.apiResultData) {
+                            return data.apiResultData.map(cliente => [
+                                cliente.codigoCliente,
+                                cliente.documento,
+                                cliente.endereco,
+                                cliente.uf,
+                                cliente.razaoSocial,
+                                cliente.nomeFantasia,
+
+                            ]);
+                        }
+                        return [];
+                    }
+                },
+
+                search: true,
+                sort: true,
+                pagination: {
+                    limit: 10
+                },
+
+                language: {
+                    'search': { 'placeholder': '🔍 Pesquisar...' },
+                    'pagination': {
+                        'previous': 'Anterior', 'next': 'Próximo', 'showing': 'Mostrando',
+                        'results': () => 'resultados', 'to': 'a', 'of': 'de'
+                    },
+                    'loading': 'Carregando...',
+                    'noRecordsFound': 'Nenhum registro encontrado',
+                }
+
+            }).render(document.getElementById("minha-tabela"));
+        }
+        //#endregion
+    </script>
+}

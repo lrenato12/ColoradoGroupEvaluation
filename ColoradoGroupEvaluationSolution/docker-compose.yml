@@ -1,0 +1,28 @@
+services:
+  # 1. Serviço do Backend (API)
+  backend-api: # <--- Nome do serviço que o frontend usará para se conectar
+    image: ${DOCKER_REGISTRY-}coloradogroupevaluationapi
+    build:
+      context: .
+      # Verifique o caminho exato para o Dockerfile do backend
+      dockerfile: 2-BackEnd/ColoradoGroupEvaluation.Api/Dockerfile 
+    ports:
+      # Mapeamento: porta_do_host:porta_interna_do_container
+      # Permite acessar a API pelo navegador via http://localhost:32780
+      - "32780:8080" # (Porta interna 8080 do container, porta externa 32780 da máquina host)
+
+  # 2. Serviço do Frontend
+  coloradogroupevaluation.frontend:
+    image: ${DOCKER_REGISTRY-}coloradogroupevaluationfrontend
+    build:
+      context: .
+      dockerfile: 1-FrontEnd/ColoradoGroupEvaluation.FrontEnd/Dockerfile
+    ports:
+      # Permite acessar o frontend pelo navegador via http://localhost:8000
+      - "8000:8080"
+    environment:
+      # Variável de ambiente que informa ao frontend onde encontrar a API.
+      # O valor 'http://backend-api:8080' usa o nome do serviço acima.
+      ApiBaseUrl: "http://backend-api:8080" 
+    depends_on:
+      - backend-api # Garante que o backend inicie antes do frontend

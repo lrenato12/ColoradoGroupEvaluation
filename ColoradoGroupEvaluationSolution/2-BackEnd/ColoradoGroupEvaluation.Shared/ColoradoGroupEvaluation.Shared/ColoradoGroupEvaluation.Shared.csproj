@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Cliente\Response\" />
     <Folder Include="Models\Telefone\Response\" />
     <Folder Include="Models\Telefone\Request\" />
     <Folder Include="Models\TipoTelefone\Response\" />

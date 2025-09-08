@@ -1,8 +1,99 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div id="minha-tabela"></div>
+
 </div>
+
+@section Scripts{
+    <script>
+        function GetBaseUrl() {
+            return window.location.origin + '/';
+        }
+
+        //#region [ DOM CONTENT LOADED ]
+        document.addEventListener("DOMContentLoaded", function () {
+            // Apenas chame a função que configura e carrega a grade.
+            // O Grid.js fará a chamada AJAX internamente.
+            LoadGrid();
+        });
+        //#endregion
+
+        // O fetchGetHandler manual não é mais necessário para carregar a grade,
+        // mas pode ser mantido se você precisar dele para outras requisições futuras.
+        /*
+        async function fetchGetHandler(url) {
+            const response = await fetch(url, { ... });
+            return await response.json();
+        }
+        */
+
+        //#region [ GRID LOADER ]
+        function LoadGrid() {
+            const apiUrl = `${GetBaseUrl()}Home/GetAllCliente`;
+
+            new gridjs.Grid({
+                // Nomes das colunas que queremos exibir na tabela
+                columns: [
+                    { id: 'nome', name: 'Nome' },       // Ajuste os IDs se necessário
+                    { id: 'email', name: 'Email' },
+                    { id: 'telefone', name: 'Telefone' } // Exemplo de nome de propriedade
+                ],
+
+                // Configuração para buscar dados da SUA API local
+                server: {
+                    url: apiUrl,
+
+                    // IMPORTANTE: Ajuste esta função para mapear os dados que vêm da sua API.
+                    // O exemplo abaixo assume que sua API retorna um array de objetos,
+                    // e que os objetos têm propriedades 'nome', 'email' e 'telefone'.
+                    then: data => {
+                        // Verifique o formato real dos seus dados no console do navegador (F12 > Network)
+                        // Se sua API retornar { success: true, result: [...] }, use data.result.map(...)
+                        if (Array.isArray(data)) {
+                            return data.map(cliente => [
+                                cliente.nome,     // Use o nome exato da propriedade JSON (ex: cliente.NomeCliente)
+                                cliente.email,    // Use o nome exato da propriedade JSON
+                                cliente.telefone  // Use o nome exato da propriedade JSON
+                            ]);
+                        } else if (data.result && Array.isArray(data.result)) {
+                            // Exemplo se sua API encapsular os dados em um objeto: { result: [...] }
+                            return data.result.map(cliente => [
+                                cliente.nome,
+                                cliente.email,
+                                cliente.telefone
+                            ]);
+                        }
+                        return []; // Retorna vazio se os dados não estiverem no formato esperado
+                    }
+                },
+
+                // Recursos adicionais
+                search: true,
+                sort: true,
+                pagination: {
+                    limit: 10 // Aumentei o limite para 10, ajuste conforme necessário
+                },
+
+                // Tradução
+                language: {
+                    'search': { 'placeholder': '🔍 Pesquisar...' },
+                    'pagination': {
+                        'previous': 'Anterior', 'next': 'Próximo', 'showing': 'Mostrando',
+                        'results': () => 'resultados', 'to': 'a', 'of': 'de'
+                    },
+                    'loading': 'Carregando...',
+                    'noRecordsFound': 'Nenhum registro encontrado',
+                }
+
+            }).render(document.getElementById("minha-tabela"));
+        }
+        //#endregion
+    </script>
+}
