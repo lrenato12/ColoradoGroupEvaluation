@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156 d17.13
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-FrontEnd", "1-FrontEnd", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColoradoGroupEvaluation.Infra", "2-BackEnd\ColoradoGroupEvaluation.Infra\ColoradoGroupEvaluation.Infra\ColoradoGroupEvaluation.Infra.csproj", "{A05D8A73-9ED5-48E0-B257-6D7140B0BEC2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColoradoGroupEvaluation.Shared", "2-BackEnd\ColoradoGroupEvaluation.Shared\ColoradoGroupEvaluation.Shared\ColoradoGroupEvaluation.Shared.csproj", "{3EF7DA1D-CB3A-4DA6-9626-B60CB4131D27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColoradoGroupEvaluation.FrontEnd", "1-FrontEnd\ColoradoGroupEvaluation.FrontEnd\ColoradoGroupEvaluation.FrontEnd.csproj", "{8C722873-09C8-4399-BBAA-6AC24335DBA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{3EF7DA1D-CB3A-4DA6-9626-B60CB4131D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EF7DA1D-CB3A-4DA6-9626-B60CB4131D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EF7DA1D-CB3A-4DA6-9626-B60CB4131D27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C722873-09C8-4399-BBAA-6AC24335DBA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C722873-09C8-4399-BBAA-6AC24335DBA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C722873-09C8-4399-BBAA-6AC24335DBA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C722873-09C8-4399-BBAA-6AC24335DBA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{318FE9D1-5189-4C71-845A-6037F7261B9D} = {687C805A-B0DA-450A-A64A-857FACD5F809}
 		{A05D8A73-9ED5-48E0-B257-6D7140B0BEC2} = {687C805A-B0DA-450A-A64A-857FACD5F809}
 		{3EF7DA1D-CB3A-4DA6-9626-B60CB4131D27} = {687C805A-B0DA-450A-A64A-857FACD5F809}
+		{8C722873-09C8-4399-BBAA-6AC24335DBA1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E5984C1-0519-45FD-98D1-733768DFE517}
