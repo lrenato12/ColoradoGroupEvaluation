@@ -8,7 +8,7 @@
 
     <a asp-action="Create" class="btn btn-outline-secondary me-md-2">Novo Cliente ></a>
 
-    <div id="minha-tabela"></div>
+    <div id="mainGrid"></div>
 
 </div>
 
@@ -19,23 +19,35 @@
         }
 
         //#region [ DOM CONTENT LOADED ]
-        document.addEventListener("DOMContentLoaded", function () {-
+        document.addEventListener("DOMContentLoaded", function () {
             LoadGrid();
         });
         //#endregion
 
-        //#region [ GRID LOADER ]
+        //#region [ LOAD GRID ]
         function LoadGrid() {
             const apiUrl = `${GetBaseUrl()}Home/GetAllCliente`;
 
+            document.getElementById("mainGrid").innerHTML = "";
+
             new gridjs.Grid({
                 columns: [
-                    { id: 'codigoCliente', name: 'codigoCliente' },
-                    { id: 'documento', name: 'documento' },
-                    { id: 'endereco', name: 'Telefone' },
-                    { id: 'uf', name: 'uf' },
-                    { id: 'razaoSocial', name: 'razaoSocial' },
-                    { id: 'nomeFantasia', name: 'nomeFantasia' },
+                    { id: 'codigoCliente', name: 'ID', hidden: true },
+                    { id: 'razaoSocial', name: 'Razão Social' },
+                    { id: 'nomeFantasia', name: 'Nome Fantasia' },
+                    { id: 'documento', name: 'Documento' },
+                    { id: 'endereco', name: 'Endereço' },
+                    { id: 'uf', name: 'UF' },
+                    {
+                        name: 'Ações',
+                        sort: false,
+                        formatter: (cell, row) => {
+                            const id = row.cells[0].data;
+                            return gridjs.html(
+                                `<button class="btn btn-danger btn-sm" onclick="ConfirmDelete(${id})">Excluir</button>`
+                            );
+                        }
+                    }
                 ],
 
                 server: {
@@ -44,12 +56,12 @@
                         if (data.apiResultData) {
                             return data.apiResultData.map(cliente => [
                                 cliente.codigoCliente,
+                                cliente.razaoSocial,
+                                cliente.nomeFantasia,
                                 cliente.documento,
                                 cliente.endereco,
                                 cliente.uf,
-                                cliente.razaoSocial,
-                                cliente.nomeFantasia,
-
+                                null
                             ]);
                         }
                         return [];
@@ -72,7 +84,33 @@
                     'noRecordsFound': 'Nenhum registro encontrado',
                 }
 
-            }).render(document.getElementById("minha-tabela"));
+            }).render(document.getElementById("mainGrid"));
+        }
+        //#endregion
+
+        //#region [ CONFIRM DELETE ]
+        function ConfirmDelete(clienteId) {
+            if (confirm("Tem certeza que deseja excluir este cliente?")) {
+                const deleteUrl = `${GetBaseUrl()}Home/Delete/${clienteId}`;
+
+                fetch(deleteUrl, {
+                    method: 'GET'
+                })
+                    .then(response => {
+                        debugger;
+
+                        if (response.ok) {
+                            alert("Cliente excluído com sucesso!");
+                            LoadGrid();
+                        } else {
+                            response.text().then(text => alert("Erro ao excluir: " + text));
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro na requisição de exclusão:", error);
+                        alert("Ocorreu um erro de rede.");
+                    });
+            }
         }
         //#endregion
     </script>

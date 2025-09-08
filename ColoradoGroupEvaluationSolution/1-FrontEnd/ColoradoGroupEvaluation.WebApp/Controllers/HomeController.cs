@@ -102,8 +102,8 @@ public class HomeController : BaseController
     #endregion
 
     #region DELETE - [ Delete ]
-    [HttpPut]
-    public async Task<JsonResult> Delete(int id)
+    [HttpGet]
+    public async Task<JsonResult> Delete([FromRoute] int id)
     {
         try
         {

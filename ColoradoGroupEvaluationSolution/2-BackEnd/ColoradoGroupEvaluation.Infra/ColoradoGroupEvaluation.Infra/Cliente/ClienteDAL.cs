@@ -51,7 +51,7 @@ public class ClienteDAL : BaseDAL, IClienteDAL
     {
         var existItem = await _context.Clientes.FindAsync(requestModel.CodigoCliente);
         if (existItem == null)
-            throw new Exception("Tipo de Telefone não encontrado.");
+            throw new Exception("Nao foi possivel localizar o registro para deletar.");
 
         requestModel.DataInsercao = existItem.DataInsercao;
 
@@ -62,13 +62,11 @@ public class ClienteDAL : BaseDAL, IClienteDAL
     #endregion
 
     #region [ DELETE ]
-    public async Task<bool> Delete(int telefoneId)
+    public async Task<bool> Delete(int id)
     {
-        var currentItem = await _context.Clientes.FindAsync(telefoneId);
+        var currentItem = await _context.Clientes.FindAsync(id);
         if (currentItem == null)
-        {
-            //TODO - RETORNAR ERRO
-        }
+            throw new Exception("Nao foi possivel localizar o registro para deletar.");
 
         _context.Clientes.Remove(currentItem);
 

@@ -31,9 +31,9 @@ public class ClienteManager : BaseManager, IClienteManager
         _context = context;
     }
 
-    public async Task<ApiResultModel> GetById(int clienteId)
+    public async Task<ApiResultModel> GetById(int id)
     {
-        var result = await _clienteDAL.GetById(clienteId);
+        var result = await _clienteDAL.GetById(id);
 
         return new ApiResultModel().WithSuccess(result);
     }
@@ -84,9 +84,9 @@ public class ClienteManager : BaseManager, IClienteManager
         return new ApiResultModel().WithSuccess(requestModel);
     }
 
-    public async Task<ApiResultModel> Delete(int clienteId)
+    public async Task<ApiResultModel> Delete(int id)
     {
-        var result = await _clienteDAL.Delete(clienteId);
+        var result = await _clienteDAL.Delete(id);
 
         return new ApiResultModel().WithSuccess(result);
     }

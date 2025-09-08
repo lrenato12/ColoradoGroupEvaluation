@@ -5,7 +5,7 @@ namespace ColoradoGroupEvaluation.Infra.Cliente;
 public interface IClienteDAL
 {
     #region [ GET BY ID ]
-    Task<ClienteModel?> GetById(int clienteId);
+    Task<ClienteModel?> GetById(int id);
     #endregion
 
     #region [ GET ALL ]
@@ -21,6 +21,6 @@ public interface IClienteDAL
     #endregion
 
     #region [ DELETE ]
-    Task<bool> Delete(int clienteId);
+    Task<bool> Delete(int id);
     #endregion
 }

@@ -72,9 +72,7 @@ public class TelefoneDAL : BaseDAL, ITelefoneDAL
     {
         var currentItem = await _context.Telefones.FindAsync(TelefoneId);
         if (currentItem == null)
-        {
-            //TODO - RETORNAR ERRO
-        }
+            throw new Exception("Nao foi possivel localizar o registro para deletar.");
 
         _context.Telefones.Remove(currentItem);
 
