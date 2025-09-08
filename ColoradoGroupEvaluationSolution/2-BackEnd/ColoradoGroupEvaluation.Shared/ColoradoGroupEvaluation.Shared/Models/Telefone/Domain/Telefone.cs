@@ -10,6 +10,5 @@ public class Telefone
     public bool Ativo { get; set; }
     public DateTime DataInsercao { get; set; }
     public string? UsuarioInsercao { get; set; }
-    public required virtual Cliente.Domain.Cliente Cliente { get; set; }
-    public required virtual TipoTelefone.Domain.TipoTelefone TipoTelefone { get; set; }
+    public virtual Cliente.Domain.Cliente Cliente { get; set; }
 }

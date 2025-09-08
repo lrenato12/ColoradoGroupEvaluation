@@ -46,6 +46,7 @@ public class TelefoneDAL : BaseDAL, ITelefoneDAL
     public async Task<int> Create(TelefoneModel requestModel)
     {
         requestModel.DataInsercao = DateTime.Now;
+        requestModel.CodigoTipoTelefone = 1;
         await _context.Telefones.AddAsync(requestModel);
         return await _context.SaveChangesAsync();
     }

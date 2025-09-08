@@ -4,6 +4,7 @@ using ColoradoGroupEvaluation.Infra.Base.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ColoradoGroupEvaluation.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250908211432_UpdatedModel")]
+    partial class UpdatedModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,12 +112,17 @@ namespace ColoradoGroupEvaluation.Infra.Migrations
                     b.Property<string>("Operadora")
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("TipoTelefoneCodigoTipoTelefone")
+                        .HasColumnType("int");
+
                     b.Property<string>("UsuarioInsercao")
                         .HasColumnType("longtext");
 
                     b.HasKey("CodigoTelefone");
 
                     b.HasIndex("ClienteCodigoCliente");
+
+                    b.HasIndex("TipoTelefoneCodigoTipoTelefone");
 
                     b.ToTable("Telefones");
                 });
@@ -151,10 +159,19 @@ namespace ColoradoGroupEvaluation.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ColoradoGroupEvaluation.Shared.Models.TipoTelefone.Domain.TipoTelefone", null)
+                        .WithMany("Telefones")
+                        .HasForeignKey("TipoTelefoneCodigoTipoTelefone");
+
                     b.Navigation("Cliente");
                 });
 
             modelBuilder.Entity("ColoradoGroupEvaluation.Shared.Models.Cliente.Domain.Cliente", b =>
+                {
+                    b.Navigation("Telefones");
+                });
+
+            modelBuilder.Entity("ColoradoGroupEvaluation.Shared.Models.TipoTelefone.Domain.TipoTelefone", b =>
                 {
                     b.Navigation("Telefones");
                 });

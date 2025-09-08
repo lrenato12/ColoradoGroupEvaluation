@@ -4,6 +4,7 @@ using ColoradoGroupEvaluation.WebApp.Models;
 using ColoradoGroupEvaluation.Shared.Models.Cliente.Response;
 using ColoradoGroupEvaluation.WebApp.Repository;
 using System.Text.Json;
+using ColoradoGroupEvaluation.Shared.Models.Cliente.Request;
 
 namespace ColoradoGroupEvaluation.WebApp.Controllers;
 
@@ -25,6 +26,8 @@ public class HomeController : BaseController
     #endregion
 
     public IActionResult Index() => View();
+
+    public IActionResult Create() => View();
 
     public IActionResult Privacy()
     {
@@ -57,6 +60,55 @@ public class HomeController : BaseController
             }
             else
                 return Json(result);
+        }
+        catch (Exception ex)
+        {
+            return Json(new { data = new List<ClienteResponseModel>() });
+        }
+    }
+    #endregion
+
+    #region POST - [ Create ]
+    [HttpPost]
+    public async Task<JsonResult> Create([FromBody] ClienteRequestModel requestModel)
+    {
+        try
+        {
+            requestModel.UsuarioInsercao = "System";
+            var result = await _clienteRepository.CreateCliente(requestModel);
+            return Json(result);
+        }
+        catch (Exception ex)
+        {
+            return Json(new { data = new List<ClienteResponseModel>() });
+        }
+    }
+    #endregion
+
+    #region PUT - [ Update ]
+    [HttpPut]
+    public async Task<JsonResult> Update([FromBody] ClienteRequestModel requestModel)
+    {
+        try
+        {
+            var result = await _clienteRepository.UpdateCliente(requestModel);
+            return Json(result);
+        }
+        catch (Exception ex)
+        {
+            return Json(new { data = new List<ClienteResponseModel>() });
+        }
+    }
+    #endregion
+
+    #region DELETE - [ Delete ]
+    [HttpPut]
+    public async Task<JsonResult> Delete(int id)
+    {
+        try
+        {
+            var result = await _clienteRepository.DeleteCliente(id);
+            return Json(result);
         }
         catch (Exception ex)
         {

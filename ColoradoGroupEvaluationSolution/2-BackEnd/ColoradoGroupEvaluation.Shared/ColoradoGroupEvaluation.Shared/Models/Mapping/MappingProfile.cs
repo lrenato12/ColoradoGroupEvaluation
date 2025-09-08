@@ -16,12 +16,9 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.UsuarioInsercao, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.UsuarioInsercao) ? "System" : src.UsuarioInsercao ));
 
         CreateMap<ClienteRequestModel, TelefoneModel>()
-            .ForMember(dest => dest.CodigoTelefone, opt => opt.Ignore())
-            .ForMember(dest => dest.Cliente, opt => opt.Ignore())
-            .ForMember(dest => dest.TipoTelefone, opt => opt.Ignore())
             .ForMember(dest => dest.DataInsercao, opt => opt.MapFrom(src => DateTime.UtcNow))
-            .ForMember(dest => dest.UsuarioInsercao, opt => opt.Ignore());
-        
+            .ForMember(dest => dest.UsuarioInsercao, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.UsuarioInsercao) ? "System" : src.UsuarioInsercao));
+
         CreateMap<ClienteRequestModel, TipoTelefoneModel>()
             .ForMember(dest => dest.DataInsercao, opt => opt.MapFrom(src => DateTime.UtcNow))
             .ForMember(dest => dest.UsuarioInsercao, opt => opt.Ignore());

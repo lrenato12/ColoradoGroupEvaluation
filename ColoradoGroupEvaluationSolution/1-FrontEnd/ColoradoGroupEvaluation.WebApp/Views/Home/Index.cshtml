@@ -4,8 +4,9 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Controle de Clientes</h1>
+
+    <a asp-action="Create" class="btn btn-outline-secondary me-md-2">Novo Cliente ></a>
 
     <div id="minha-tabela"></div>
 
@@ -18,21 +19,10 @@
         }
 
         //#region [ DOM CONTENT LOADED ]
-        document.addEventListener("DOMContentLoaded", function () {
-            // Apenas chame a função que configura e carrega a grade.
-            // O Grid.js fará a chamada AJAX internamente.
+        document.addEventListener("DOMContentLoaded", function () {-
             LoadGrid();
         });
         //#endregion
-
-        // O fetchGetHandler manual não é mais necessário para carregar a grade,
-        // mas pode ser mantido se você precisar dele para outras requisições futuras.
-        /*
-        async function fetchGetHandler(url) {
-            const response = await fetch(url, { ... });
-            return await response.json();
-        }
-        */
 
         //#region [ GRID LOADER ]
         function LoadGrid() {

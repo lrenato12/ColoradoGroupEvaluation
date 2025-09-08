@@ -41,7 +41,8 @@ public class ClienteDAL : BaseDAL, IClienteDAL
     {
         requestModel.DataInsercao = DateTime.Now;
         await _context.Clientes.AddAsync(requestModel);
-        return await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
+        return requestModel.CodigoCliente;
     }
     #endregion
 
