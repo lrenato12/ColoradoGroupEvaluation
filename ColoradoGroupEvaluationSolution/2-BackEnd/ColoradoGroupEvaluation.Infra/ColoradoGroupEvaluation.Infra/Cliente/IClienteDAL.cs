@@ -11,7 +11,7 @@ public interface IClienteDAL
     Task<ClienteModel?> ExistsItem(int id);
 
     #region [ GET ALL ]
-    Task<IEnumerable<ClienteModel>> GetAll();
+    Task<IEnumerable<ClienteResponseModel>> GetAll();
     #endregion
 
     #region [ CREATE ]

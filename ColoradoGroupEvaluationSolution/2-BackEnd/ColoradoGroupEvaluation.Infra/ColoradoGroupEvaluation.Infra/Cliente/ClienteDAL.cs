@@ -1,6 +1,5 @@
 ﻿using ColoradoGroupEvaluation.Infra.Base;
 using ColoradoGroupEvaluation.Infra.Base.Database;
-using ColoradoGroupEvaluation.Shared.Models.Cliente.Domain;
 using ColoradoGroupEvaluation.Shared.Models.Cliente.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -67,29 +66,38 @@ public class ClienteDAL : BaseDAL, IClienteDAL
     }
 
     #region [ GET ALL ]
-    public async Task<IEnumerable<ClienteModel>> GetAll()
+    public async Task<IEnumerable<ClienteResponseModel>> GetAll()
     {
-        //var resultado = await _context.Clientes
-        //    .SelectMany(
-        //        cliente => cliente.Telefones.DefaultIfEmpty(),
-        //        (cliente, telefone) => new { cliente, telefone }
-        //    )
-        //    .Select(x => new ClienteResponseModel
-        //    {
-        //        CodigoCliente = x.cliente.CodigoCliente,
-        //        RazaoSocial = x.cliente.RazaoSocial,
-        //        NomeFantasia = x.cliente.NomeFantasia,
-        //        Documento = x.cliente.Documento,
+        var query = _context.Clientes
+            .SelectMany(
+                cliente => cliente.Telefones.DefaultIfEmpty(),
+                (cliente, telefone) => new { cliente, telefone }
+            );
 
-        //        NumeroTelefone = x.telefone == null ? null : x.telefone.NumeroTelefone,
-        //        Operadora = x.telefone == null ? null : x.telefone.Operadora,
+        var resultado = await query.Select(x => new ClienteResponseModel
+        {
+            CodigoCliente = x.cliente.CodigoCliente,
+            RazaoSocial = x.cliente.RazaoSocial,
+            NomeFantasia = x.cliente.NomeFantasia,
+            TipoPessoa = x.cliente.TipoPessoa,
+            Documento = x.cliente.Documento,
+            Endereco = x.cliente.Endereco,
+            Complemento = x.cliente.Complemento,
+            Bairro = x.cliente.Bairro,
+            Cidade = x.cliente.Cidade,
+            CEP = x.cliente.CEP,
+            UF = x.cliente.UF,
+            DataInsercao = x.cliente.DataInsercao,
+            UsuarioInsercao = x.cliente.UsuarioInsercao,
 
-        //        DescricaoTipoTelefone = (x.telefone == null || x.telefone.NumeroTelefone == null)
-        //                                ? null
-        //                                : x.telefone.NumeroTelefone
-        //    })
-        //    .ToListAsync();
-        return await _context.Clientes.AsNoTracking().ToListAsync();
+            CodigoTelefone = (x.telefone == null) ? 0 : x.telefone.CodigoTelefone,
+            NumeroTelefone = (x.telefone == null) ? null : x.telefone.NumeroTelefone,
+            Operadora = (x.telefone == null) ? null : x.telefone.Operadora,
+            CodigoTipoTelefone = (x.telefone == null) ? 0 : x.telefone.CodigoTipoTelefone,
+        })
+        .ToListAsync();
+
+        return resultado;
     }
     #endregion
 

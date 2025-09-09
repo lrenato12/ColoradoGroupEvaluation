@@ -9,7 +9,6 @@
     <a asp-action="Create" class="btn btn-outline-secondary me-md-2">Novo Cliente ></a>
 
     <div id="mainGrid"></div>
-
 </div>
 
 @section Scripts{
@@ -32,15 +31,23 @@
 
             new gridjs.Grid({
                 columns: [
-                    { id: 'codigoCliente', name: 'ID', hidden: true },
-                    { id: 'razaoSocial', name: 'Razão Social' },
-                    { id: 'nomeFantasia', name: 'Nome Fantasia' },
-                    { id: 'documento', name: 'Documento' },
-                    { id: 'endereco', name: 'Endereço' },
-                    { id: 'uf', name: 'UF' },
+                    { id: 'codigoCliente', name: 'ID', hidden: true, className: 'truncate-cell' },
+                    { id: 'razaoSocial', name: 'Razão Social', width: '250px', className: 'truncate-cell' },
+                    { id: 'nomeFantasia', name: 'Nome Fantasia', width: '250px', className: 'truncate-cell' },
+                    { id: 'documento', name: 'Documento', width: '250px', className: 'truncate-cell' },
+                    { id: 'endereco', name: 'Endereço', width: '250px', className: 'truncate-cell' },
+                    { id: 'bairro', name: 'Bairro', width: '250px', className: 'truncate-cell' },
+                    { id: 'cidade', name: 'Cidade', width: '250px', className: 'truncate-cell' },
+                    { id: 'uf', name: 'UF', width: '100px', className: 'truncate-cell' },
+                    { id: 'cep', name: 'CEP', width: '150px', className: 'truncate-cell' },
+                    { id: 'numeroTelefone', name: 'Telefone', width: '200px', className: 'truncate-cell' },
+                    { id: 'operadora', name: 'Operadora', width: '200px', className: 'truncate-cell' },
+                    { id: 'tipoPessoa', name: 'Tipo Pessoa', width: '150px', className: 'truncate-cell' },
                     {
                         name: 'Ações',
                         sort: false,
+                        width: '200px',
+                        className: 'truncate-cell',
                         formatter: (cell, row) => {
                             const id = row.cells[0].data;
                             const editUrl = `${GetBaseUrl()}Home/Edit/${id}`;
@@ -63,7 +70,13 @@
                                 cliente.nomeFantasia,
                                 cliente.documento,
                                 cliente.endereco,
+                                cliente.bairro,
+                                cliente.cidade,
                                 cliente.uf,
+                                cliente.cep,
+                                cliente.numeroTelefone,
+                                cliente.operadora,
+                                cliente.tipoPessoa,
                                 null
                             ]);
                         }
@@ -100,8 +113,6 @@
                     method: 'GET'
                 })
                     .then(response => {
-                        debugger;
-
                         if (response.ok) {
                             alert("Cliente excluído com sucesso!");
                             LoadGrid();
