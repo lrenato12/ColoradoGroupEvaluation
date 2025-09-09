@@ -5,6 +5,13 @@ using TelefoneModel = ColoradoGroupEvaluation.Shared.Models.Telefone.Domain.Tele
 
 namespace ColoradoGroupEvaluation.Api.Controllers.Telefone;
 
+/// <summary>
+/// Telefone Controller
+/// </summary>
+/// <param name="configuration"></param>
+/// <param name="environment"></param>
+/// <param name="httpContextAccessor"></param>
+/// <param name="telefoneManager"></param>
 [Route("[controller]")]
 [ApiController]
 public class TelefoneController([FromServices] IConfiguration configuration,
@@ -18,6 +25,11 @@ public class TelefoneController([FromServices] IConfiguration configuration,
 
     #region [ METHODS ]
     #region [ GET BY ID ]
+    /// <summary>
+    /// Recupera um item por Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     [Route("GetById/{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
@@ -25,6 +37,10 @@ public class TelefoneController([FromServices] IConfiguration configuration,
     #endregion
 
     #region [ GET ALL ]
+    /// <summary>
+    /// Recupera todos os itens
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     [Route("GetAll")]
     public async Task<IActionResult> GetAll()
@@ -32,6 +48,11 @@ public class TelefoneController([FromServices] IConfiguration configuration,
     #endregion
 
     #region [ CREATE ]
+    /// <summary>
+    /// Cria um novo item
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
     [HttpPost]
     [Route("Create")]
     public async Task<IActionResult> Create([FromBody] TelefoneModel requestModel)
@@ -39,6 +60,11 @@ public class TelefoneController([FromServices] IConfiguration configuration,
     #endregion
 
     #region [ UPDATE ]
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
     [HttpPut]
     [Route("Update")]
     public async Task<IActionResult> Update([FromBody] TelefoneModel requestModel)
@@ -46,6 +72,11 @@ public class TelefoneController([FromServices] IConfiguration configuration,
     #endregion
 
     #region [ DELETE ]
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete]
     [Route("Delete/{id}")]
     public async Task<IActionResult> Delete([FromRoute] int id)

@@ -21,14 +21,13 @@ public class TipoTelefoneDAL : BaseDAL, ITipoTelefoneDAL
     #endregion
 
     #region [ METHODS ]
-    #region [ GET DROPDOWN DATA ]
-    public async Task<IEnumerable<TipoTelefoneModel>> GetDropdownData()
-    {
-        return await _context.TiposTelefone.AsNoTracking().ToListAsync();
-    }
-    #endregion
 
     #region [ GET BY ID ]
+    /// <summary>
+    /// GET BY ID
+    /// </summary>
+    /// <param name="tipoTelefoneId"></param>
+    /// <returns></returns>
     public async Task<TipoTelefoneModel?> GetById(string tipoTelefoneId)
     {
         return await _context.TiposTelefone.FindAsync(tipoTelefoneId);
@@ -36,6 +35,10 @@ public class TipoTelefoneDAL : BaseDAL, ITipoTelefoneDAL
     #endregion
 
     #region [ GET ALL ]
+    /// <summary>
+    /// GET ALL
+    /// </summary>
+    /// <returns></returns>
     public async Task<IEnumerable<TipoTelefoneModel>> GetAll()
     {
         return await _context.TiposTelefone.AsNoTracking().ToListAsync();
@@ -43,6 +46,11 @@ public class TipoTelefoneDAL : BaseDAL, ITipoTelefoneDAL
     #endregion
 
     #region [ CREATE ]
+    /// <summary>
+    /// CREATE
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
     public async Task<int> Create(TipoTelefoneModel requestModel)
     {
         requestModel.DataInsercao = DateTime.Now;
@@ -52,6 +60,12 @@ public class TipoTelefoneDAL : BaseDAL, ITipoTelefoneDAL
     #endregion
 
     #region [ UPDATE ]
+    /// <summary>
+    /// UPDATE
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<int> Update(TipoTelefoneModel requestModel)
     {
         var existItem = await _context.TiposTelefone.FindAsync(requestModel.CodigoTipoTelefone);
@@ -67,13 +81,16 @@ public class TipoTelefoneDAL : BaseDAL, ITipoTelefoneDAL
     #endregion
 
     #region [ DELETE ]
+    /// <summary>
+    /// DELETE
+    /// </summary>
+    /// <param name="tipoTelefoneId"></param>
+    /// <returns></returns>
     public async Task<bool> Delete(string tipoTelefoneId)
     {
         var currentItem = await _context.TiposTelefone.FindAsync(tipoTelefoneId);
         if (currentItem == null)
-        {
-            //TODO - RETORNAR ERRO
-        }
+            throw new Exception("Tipo de Telefone não encontrado.");
 
         _context.TiposTelefone.Remove(currentItem);
 

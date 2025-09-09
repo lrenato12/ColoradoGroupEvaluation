@@ -6,7 +6,6 @@ using ColoradoGroupEvaluation.Infra.Telefone;
 using ColoradoGroupEvaluation.Shared.Models.Base.Result;
 using ColoradoGroupEvaluation.Shared.Models.Cliente.Request;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using ClienteModel = ColoradoGroupEvaluation.Shared.Models.Cliente.Domain.Cliente;
 using TelefoneModel = ColoradoGroupEvaluation.Shared.Models.Telefone.Domain.Telefone;
 
@@ -31,20 +30,39 @@ public class ClienteManager : BaseManager, IClienteManager
         _context = context;
     }
 
+    #region [ GET BY ID ]
+    /// <summary>
+    /// Get By Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<ApiResultModel> GetById(int id)
     {
         var result = await _clienteDAL.GetById(id);
 
         return new ApiResultModel().WithSuccess(result);
     }
+    #endregion
 
+    #region [ GET ALL ]
+    /// <summary>
+    /// Get All
+    /// </summary>
+    /// <returns></returns>
     public async Task<ApiResultModel> GetAll()
     {
         var result = await _clienteDAL.GetAll();
 
         return new ApiResultModel().WithSuccess(result);
     }
+    #endregion
 
+    #region [ Create ]
+    /// <summary>
+    /// Create
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
     public async Task<ApiResultModel> Create(ClienteRequestModel requestModel)
     {
         var clienteModel = new ClienteModel
@@ -83,18 +101,33 @@ public class ClienteManager : BaseManager, IClienteManager
 
         return new ApiResultModel().WithSuccess(requestModel);
     }
+    #endregion
 
+    #region [ DELETE ]
+    /// <summary>
+    /// Delete
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<ApiResultModel> Delete(int id)
     {
         var result = await _clienteDAL.Delete(id);
 
         return new ApiResultModel().WithSuccess(result);
     }
+    #endregion
 
+    #region [ UPDATE ]
+    /// <summary>
+    /// Update
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<ApiResultModel> Update(ClienteRequestModel requestModel)
     {
         var currentData = await _clienteDAL.ExistsItem(requestModel.CodigoCliente);
-        if(currentData == null)
+        if (currentData == null)
             throw new Exception("Nao foi possivel localizar o registro para alterar.");
 
         currentData.RazaoSocial = requestModel.RazaoSocial;
@@ -122,5 +155,6 @@ public class ClienteManager : BaseManager, IClienteManager
 
         return new ApiResultModel().WithSuccess(requestModel);
     }
+    #endregion
     #endregion
 }

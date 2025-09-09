@@ -11,30 +11,58 @@ public class ClienteRepository : BaseRepository, IClienteRepository
     public ClienteRepository(IApplicationFactory applicationFactory) : base(applicationFactory) { }
     #endregion
 
+    /// <summary>
+    /// GetClienteById
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<ApiResultModel> GetClienteById(int id)
     {
         var resultModel = await _applicationFactory.CallWebService($"Cliente/GetById/{id}", RequestTypeEnum.GET);
 
         return resultModel;
     }
+
+    /// <summary>
+    /// GetAllCliente
+    /// </summary>
+    /// <returns></returns>
     public async Task<ApiResultModel> GetAllCliente()
     {
         var resultModel = await _applicationFactory.CallWebService($"Cliente/GetAll", RequestTypeEnum.GET);
 
         return resultModel;
     }
+
+    /// <summary>
+    /// CreateCliente
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
     public async Task<ApiResultModel> CreateCliente(ClienteRequestModel requestModel)
     {
         var resultModel = await _applicationFactory.CallWebService($"Cliente/Create", RequestTypeEnum.POST, requestModel);
 
         return resultModel;
     }
+
+    /// <summary>
+    /// UpdateCliente
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
     public async Task<ApiResultModel> UpdateCliente(ClienteRequestModel requestModel)
     {
         var resultModel = await _applicationFactory.CallWebService($"Cliente/Update", RequestTypeEnum.PUT, requestModel);
 
         return resultModel;
     }
+
+    /// <summary>
+    /// DeleteCliente
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<ApiResultModel> DeleteCliente(int id)
     {
         var resultModel = await _applicationFactory.CallWebService($"Cliente/Delete/{id}", RequestTypeEnum.DELETE);

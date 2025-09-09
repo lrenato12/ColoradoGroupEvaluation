@@ -10,7 +10,6 @@ namespace ColoradoGroupEvaluation.WebApp.Controllers;
 
 public class HomeController : BaseController
 {
-
     #region [ Properties ]
     private readonly ILogger<HomeController> _logger;
     private readonly IClienteRepository _clienteRepository;
@@ -25,10 +24,28 @@ public class HomeController : BaseController
     }
     #endregion
 
+    #region [ INDEX ]
+    /// <summary>
+    /// INDEX
+    /// </summary>
+    /// <returns></returns>
     public IActionResult Index() => View();
+    #endregion
 
+    #region [ CREATE ]
+    /// <summary>
+    /// CREATE
+    /// </summary>
+    /// <returns></returns>
     public IActionResult Create() => View();
+    #endregion
 
+    #region [ EDIT ]
+    /// <summary>
+    /// EDIT
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<IActionResult> Edit(int id)
     {
         try
@@ -44,13 +61,24 @@ public class HomeController : BaseController
             return Json(new { data = new List<ClienteResponseModel>() });
         }
     }
+    #endregion
 
+    #region [ PRIVACY ]
+    /// <summary>
+    /// PRIVACY
+    /// </summary>
+    /// <returns></returns>
     public IActionResult Privacy()
     {
         return View();
     }
+    #endregion
 
-    #region GET - [ GetAllCliente ]
+    #region [ GET ALL CLIENTE ]
+    /// <summary>
+    /// GET ALL CLIENTE
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<JsonResult> GetAllCliente()
     {
@@ -73,7 +101,12 @@ public class HomeController : BaseController
     }
     #endregion
 
-    #region POST - [ Create ]
+    #region [ CREATE ]
+    /// <summary>
+    /// CREATE
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<JsonResult> Create([FromBody] ClienteRequestModel requestModel)
     {
@@ -90,7 +123,12 @@ public class HomeController : BaseController
     }
     #endregion
 
-    #region POST - [ Update ]
+    #region [ UPDATE ]
+    /// <summary>
+    /// UPDATE
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<JsonResult> Update([FromBody] ClienteRequestModel requestModel)
     {
@@ -106,7 +144,12 @@ public class HomeController : BaseController
     }
     #endregion
 
-    #region DELETE - [ Delete ]
+    #region [ DELETE ]
+    /// <summary>
+    /// DELETE
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<JsonResult> Delete([FromRoute] int id)
     {
@@ -122,9 +165,15 @@ public class HomeController : BaseController
     }
     #endregion
 
+    #region [ ERROR ]
+    /// <summary>
+    /// ERROR
+    /// </summary>
+    /// <returns></returns>
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
+    } 
+    #endregion
 }

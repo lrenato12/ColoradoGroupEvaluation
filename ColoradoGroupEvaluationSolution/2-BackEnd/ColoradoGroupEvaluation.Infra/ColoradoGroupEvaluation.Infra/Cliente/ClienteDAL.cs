@@ -24,6 +24,11 @@ public class ClienteDAL : BaseDAL, IClienteDAL
     #region [ METHODS ]
 
     #region [ GET BY ID ]
+    /// <summary>
+    /// Retorna um cliente pelo seu ID.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<ClienteResponseModel?> GetById(int id)
     {
         var query = _context.Clientes
@@ -66,6 +71,10 @@ public class ClienteDAL : BaseDAL, IClienteDAL
     }
 
     #region [ GET ALL ]
+    /// <summary>
+    /// Retorna todos os clientes.
+    /// </summary>
+    /// <returns></returns>
     public async Task<IEnumerable<ClienteResponseModel>> GetAll()
     {
         var query = _context.Clientes
@@ -102,6 +111,11 @@ public class ClienteDAL : BaseDAL, IClienteDAL
     #endregion
 
     #region [ CREATE ]
+    /// <summary>
+    /// Cria um novo cliente.
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
     public async Task<int> Create(ClienteModel requestModel)
     {
         requestModel.DataInsercao = DateTime.Now;
@@ -112,6 +126,12 @@ public class ClienteDAL : BaseDAL, IClienteDAL
     #endregion
 
     #region [ UPDATE ]
+    /// <summary>
+    /// Atualiza um cliente existente.
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<int> Update(ClienteModel requestModel)
     {
         var existItem = await _context.Clientes.FindAsync(requestModel.CodigoCliente);
@@ -125,6 +145,12 @@ public class ClienteDAL : BaseDAL, IClienteDAL
     #endregion
 
     #region [ DELETE ]
+    /// <summary>
+    /// Deleta um cliente pelo seu ID.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<bool> Delete(int id)
     {
         var currentItem = await _context.Clientes.FindAsync(id);

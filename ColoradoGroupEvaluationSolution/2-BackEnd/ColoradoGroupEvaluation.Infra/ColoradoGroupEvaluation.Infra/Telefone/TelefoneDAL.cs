@@ -21,14 +21,12 @@ public class TelefoneDAL : BaseDAL, ITelefoneDAL
     #endregion
 
     #region [ METHODS ]
-    #region [ GET DROPDOWN DATA ]
-    public async Task<IEnumerable<TelefoneModel>> GetDropdownData()
-    {
-        return await _context.Telefones.AsNoTracking().ToListAsync();
-    }
-    #endregion
-
     #region [ GET BY ID ]
+    /// <summary>
+    /// GET BY ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<TelefoneModel?> GetById(int id)
     {
         return await _context.Telefones.FindAsync(id);
@@ -36,6 +34,10 @@ public class TelefoneDAL : BaseDAL, ITelefoneDAL
     #endregion
 
     #region [ GET ALL ]
+    /// <summary>
+    /// GET ALL
+    /// </summary>
+    /// <returns></returns>
     public async Task<IEnumerable<TelefoneModel>> GetAll()
     {
         return await _context.Telefones.AsNoTracking().ToListAsync();
@@ -43,6 +45,11 @@ public class TelefoneDAL : BaseDAL, ITelefoneDAL
     #endregion
 
     #region [ CREATE ]
+    /// <summary>
+    /// CREATE
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
     public async Task<int> Create(TelefoneModel requestModel)
     {
         requestModel.DataInsercao = DateTime.Now;
@@ -53,6 +60,12 @@ public class TelefoneDAL : BaseDAL, ITelefoneDAL
     #endregion
 
     #region [ UPDATE ]
+    /// <summary>
+    /// UPDATE
+    /// </summary>
+    /// <param name="requestModel"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<int> Update(TelefoneModel requestModel)
     {
         var existItem = await _context.Telefones.FindAsync(requestModel.CodigoTelefone);
@@ -68,6 +81,12 @@ public class TelefoneDAL : BaseDAL, ITelefoneDAL
     #endregion
 
     #region [ DELETE ]
+    /// <summary>
+    /// DELETE
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<bool> Delete(int id)
     {
         var currentItem = await _context.Telefones.FindAsync(id);
