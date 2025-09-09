@@ -13,7 +13,7 @@ public class ClienteRepository : BaseRepository, IClienteRepository
 
     public async Task<ApiResultModel> GetClienteById(int id)
     {
-        var resultModel = await _applicationFactory.CallWebService($"Cliente/GetClienteById/{id}", RequestTypeEnum.GET);
+        var resultModel = await _applicationFactory.CallWebService($"Cliente/GetById/{id}", RequestTypeEnum.GET);
 
         return resultModel;
     }
@@ -31,7 +31,7 @@ public class ClienteRepository : BaseRepository, IClienteRepository
     }
     public async Task<ApiResultModel> UpdateCliente(ClienteRequestModel requestModel)
     {
-        var resultModel = await _applicationFactory.CallWebService($"Cliente/Edit", RequestTypeEnum.PUT, requestModel);
+        var resultModel = await _applicationFactory.CallWebService($"Cliente/Update", RequestTypeEnum.PUT, requestModel);
 
         return resultModel;
     }

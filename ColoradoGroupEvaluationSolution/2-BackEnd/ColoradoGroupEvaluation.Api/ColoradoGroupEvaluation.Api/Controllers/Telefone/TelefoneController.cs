@@ -20,7 +20,7 @@ public class TelefoneController([FromServices] IConfiguration configuration,
     #region [ GET BY ID ]
     [HttpGet]
     [Route("GetById/{id}")]
-    public async Task<IActionResult> GetById([FromRoute] string id)
+    public async Task<IActionResult> GetById([FromRoute] int id)
         => Ok(await _telefoneManager.GetById(id));
     #endregion
 
@@ -48,7 +48,7 @@ public class TelefoneController([FromServices] IConfiguration configuration,
     #region [ DELETE ]
     [HttpDelete]
     [Route("Delete/{id}")]
-    public async Task<IActionResult> Delete([FromRoute] string id)
+    public async Task<IActionResult> Delete([FromRoute] int id)
     => Ok(await _telefoneManager.Delete(id));
     #endregion
     #endregion

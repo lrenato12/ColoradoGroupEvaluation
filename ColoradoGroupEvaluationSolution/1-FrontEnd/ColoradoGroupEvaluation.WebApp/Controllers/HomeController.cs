@@ -29,6 +29,22 @@ public class HomeController : BaseController
 
     public IActionResult Create() => View();
 
+    public async Task<IActionResult> Edit(int id)
+    {
+        try
+        {
+            var model = await _clienteRepository.GetClienteById(id);
+
+            var response = JsonSerializer.Deserialize<ClienteResponseModel>(model.JsonResultData, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return View(response);
+        }
+        catch (Exception ex)
+        {
+            return Json(new { data = new List<ClienteResponseModel>() });
+        }
+    }
+
     public IActionResult Privacy()
     {
         return View();
@@ -43,18 +59,7 @@ public class HomeController : BaseController
             var result = await _clienteRepository.GetAllCliente();
             if (result.Success)
             {
-                // Configurações para desserialização: ignorar maiúsculas/minúsculas
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
-
-                // Desserialização
-                var resposta = JsonSerializer.Deserialize<List<ClienteResponseModel>>(result.JsonResultData, options);
-
-                //List<ClienteResponseModel> clientes = resposta.ApiResultData;
-
-                result.ApiResultData = resposta;
+                result.ApiResultData = JsonSerializer.Deserialize<List<ClienteResponseModel>>(result.JsonResultData, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 return Json(result);
             }
@@ -85,8 +90,8 @@ public class HomeController : BaseController
     }
     #endregion
 
-    #region PUT - [ Update ]
-    [HttpPut]
+    #region POST - [ Update ]
+    [HttpPost]
     public async Task<JsonResult> Update([FromBody] ClienteRequestModel requestModel)
     {
         try

@@ -1,12 +1,14 @@
-﻿using ClienteModel = ColoradoGroupEvaluation.Shared.Models.Cliente.Domain.Cliente;
+﻿using ColoradoGroupEvaluation.Shared.Models.Cliente.Response;
+using ClienteModel = ColoradoGroupEvaluation.Shared.Models.Cliente.Domain.Cliente;
 
 namespace ColoradoGroupEvaluation.Infra.Cliente;
 
 public interface IClienteDAL
 {
     #region [ GET BY ID ]
-    Task<ClienteModel?> GetById(int id);
+    Task<ClienteResponseModel?> GetById(int id);
     #endregion
+    Task<ClienteModel?> ExistsItem(int id);
 
     #region [ GET ALL ]
     Task<IEnumerable<ClienteModel>> GetAll();

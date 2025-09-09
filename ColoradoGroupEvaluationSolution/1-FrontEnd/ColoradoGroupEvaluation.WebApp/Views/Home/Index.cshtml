@@ -43,7 +43,10 @@
                         sort: false,
                         formatter: (cell, row) => {
                             const id = row.cells[0].data;
+                            const editUrl = `${GetBaseUrl()}Home/Edit/${id}`;
+
                             return gridjs.html(
+                                `<a href="${editUrl}" class="btn btn-primary btn-sm me-1">Editar</a>` +
                                 `<button class="btn btn-danger btn-sm" onclick="ConfirmDelete(${id})">Excluir</button>`
                             );
                         }

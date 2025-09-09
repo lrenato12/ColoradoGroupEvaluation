@@ -24,9 +24,9 @@ public class TelefoneManager : BaseManager, ITelefoneManager
         throw new NotImplementedException();
     }
 
-    public async Task<ApiResultModel> GetById(string telefoneId)
+    public async Task<ApiResultModel> GetById(int id)
     {
-        var result = await _telefoneDAL.GetById(telefoneId);
+        var result = await _telefoneDAL.GetById(id);
 
         return new ApiResultModel().WithSuccess(result);
     }
@@ -52,9 +52,9 @@ public class TelefoneManager : BaseManager, ITelefoneManager
         return new ApiResultModel().WithSuccess(result);
     }
 
-    public async Task<ApiResultModel> Delete(string telefoneId)
+    public async Task<ApiResultModel> Delete(int id)
     {
-        var result = await _telefoneDAL.Delete(telefoneId);
+        var result = await _telefoneDAL.Delete(id);
 
         return new ApiResultModel().WithSuccess(result);
     }

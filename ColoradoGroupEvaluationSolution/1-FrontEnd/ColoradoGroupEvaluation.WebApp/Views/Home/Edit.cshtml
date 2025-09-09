@@ -1,0 +1,218 @@
+﻿@model ColoradoGroupEvaluation.Shared.Models.Cliente.Response.ClienteResponseModel
+
+@{
+    ViewData["Title"] = "Alteração de Clientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">@ViewData["Title"]</h4>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Preencha os campos abaixo para editar o cliente.</p>
+
+                    <form id="clienteForm" method="post" action="Update">
+                        <input type="text" class="form-control" id="codigoClienteInput" value="@Model.CodigoCliente" asp-for="@Model.CodigoCliente" hidden readonly />
+                        <input type="text" class="form-control" id="codigoTelefoneInput" value="@Model.CodigoTelefone" asp-for="@Model.CodigoTelefone" hidden readonly />
+                        <input type="text" class="form-control" id="usuarioInsercaoInput" value="@Model.UsuarioInsercao" asp-for="@Model.UsuarioInsercao" hidden readonly />
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="razaoSocialInput" class="form-label fw-bold">Razão Social</label>
+                                <input type="text" id="razaoSocialInput" name="RazaoSocial" class="form-control" value="@Model.RazaoSocial" asp-for="@Model.RazaoSocial">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="nomeFantasiaInput" class="form-label fw-bold">Nome Fantasia</label>
+                                <input type="text" id="nomeFantasiaInput" name="NomeFantasia" class="form-control" value="@Model.NomeFantasia" asp-for="@Model.NomeFantasia">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="tipoPessoaInput" class="form-label fw-bold">Tipo de Pessoa</label>
+                                <select id="tipoPessoaInput" name="TipoPessoa" class="form-select" value="@Model.TipoPessoa" asp-for="@Model.TipoPessoa">
+                                    <option value="J">Pessoa Jurídica</option>
+                                    <option value="F">Pessoa Física</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="documentoInput" class="form-label fw-bold">Documento (CPF/CNPJ)</label>
+                                <input type="text" id="documentoInput" name="Documento" class="form-control" value="@Model.Documento" asp-for="@Model.Documento">
+                            </div>
+                        </div>
+
+                        <h5 class="mt-4 border-bottom pb-2 mb-3">Endereço</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label for="cepInput" class="form-label fw-bold">CEP</label>
+                                <input type="text" id="cepInput" name="CEP" class="form-control" value="@Model.CEP" asp-for="@Model.CEP">
+                            </div>
+                            <div class="col-md-7">
+                                <label for="enderecoInput" class="form-label fw-bold">Logradouro</label>
+                                <input type="text" id="enderecoInput" name="Endereco" class="form-control" value="@Model.Endereco" asp-for="@Model.Endereco">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="ufInput" class="form-label fw-bold">UF</label>
+                                <input type="text" id="ufInput" name="UF" class="form-control" value="@Model.UF" asp-for="@Model.UF" maxlength="2">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="bairroInput" class="form-label fw-bold">Bairro</label>
+                                <input type="text" id="bairroInput" name="Bairro" class="form-control" value="@Model.Bairro" asp-for="@Model.Bairro">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cidadeInput" class="form-label fw-bold">Cidade</label>
+                                <input type="text" id="cidadeInput" name="Cidade" class="form-control" value="@Model.Cidade" asp-for="@Model.Cidade">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="complementoInput" class="form-label fw-bold">Complemento</label>
+                            <input type="text" id="complementoInput" name="Complemento" class="form-control" value="@Model.Complemento" asp-for="@Model.Complemento">
+                        </div>
+
+                        <h5 class="mt-4 border-bottom pb-2 mb-3">Telefone</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="tipoTelefoneSelect" class="form-label fw-bold">Tipo de Telefone</label>
+                                <select id="tipoTelefoneSelect" class="form-select" value="@Model.DescricaoTipoTelefone" asp-for="@Model.DescricaoTipoTelefone">
+                                    <option value="" disabled>Selecione o tipo...</option>
+                                    <option value="1">Residencial</option>
+                                    <option value="2">Comercial</option>
+                                    <option value="3">Whatsapp</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="operadoraInput" class="form-label fw-bold">Operadora</label>
+                                <select id="operadoraInput" name="Operadora" class="form-select" value="@Model.Operadora" asp-for="@Model.Operadora">
+                                    <option value="" disabled>Selecione a operadora...</option>
+                                    <option value="Vivo">Vivo</option>
+                                    <option value="Claro">Claro</option>
+                                    <option value="TIM">TIM</option>
+                                    <option value="Oi">Oi</option>
+                                    <option value="Nextel">Nextel</option>
+                                    <option value="Outra">Outra</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label for="codigoTelefoneInput" class="form-label fw-bold">DDD</label>
+                                <input type="text" id="codigoTelefoneInput" name="CodigoTelefone" class="form-control" value="@Model.CodigoTelefone" asp-for="@Model.CodigoTelefone" maxlength="2">
+                            </div>
+                            <div class="col-md-9">
+                                <label for="numeroTelefoneInput" class="form-label fw-bold">Número</label>
+                                <input type="tel" id="numeroTelefoneInput" name="NumeroTelefone" class="form-control" value="@Model.NumeroTelefone" asp-for="@Model.NumeroTelefone">
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="codigoTipoTelefoneInput" name="CodigoTipoTelefone" value="@Model.CodigoTelefone" asp-for="@Model.CodigoTelefone">
+                        <input type="hidden" id="descricaoTipoTelefoneInput" name="DescricaoTipoTelefone" value="@Model.DescricaoTipoTelefone" asp-for="@Model.DescricaoTipoTelefone">
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="operadoraInput" class="form-label fw-bold">Operadora</label>
+                                <input type="text" id="operadoraInput" name="Operadora" class="form-control" value="@Model.Operadora" asp-for="@Model.Operadora">
+                            </div>
+
+                            <div class="col-md-6" hidden>
+                                <label for="codigoTipoTelefoneInput" class="form-label fw-bold">Código do Tipo (Interno)</label>
+                                <input type="text" id="codigoTipoTelefoneInput" name="CodigoTipoTelefone" class="form-control" placeholder="Código interno (ex: 1, 2)">
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end border-top pt-3 mt-4">
+                            <button type="button" class="btn btn-outline-secondary me-md-2">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function GetBaseUrl() {
+            return window.location.origin + '/';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const tipoTelefoneSelect = document.getElementById('tipoTelefoneSelect');
+
+            const codigoTipoTelefoneInput = document.getElementById('codigoTipoTelefoneInput');
+            const descricaoTipoTelefoneInput = document.getElementById('descricaoTipoTelefoneInput');
+
+            tipoTelefoneSelect.addEventListener('change', function () {
+                const selectedValue = this.value;
+
+                const selectedText = this.options[this.selectedIndex].text;
+
+                codigoTipoTelefoneInput.value = selectedValue;
+                descricaoTipoTelefoneInput.value = selectedText;
+            });
+
+            const form = document.getElementById('clienteForm');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const dataToSend = {
+                    CodigoCliente: document.getElementById('codigoClienteInput').value,
+                    CodigoTelefone: document.getElementById('codigoTelefoneInput').value,
+                    RazaoSocial: document.getElementById('razaoSocialInput').value,
+                    NomeFantasia: document.getElementById('nomeFantasiaInput').value,
+                    TipoPessoa: document.getElementById('tipoPessoaInput').value,
+                    Documento: document.getElementById('documentoInput').value,
+                    Endereco: document.getElementById('enderecoInput').value,
+                    Complemento: document.getElementById('complementoInput').value,
+                    Bairro: document.getElementById('bairroInput').value,
+                    Cidade: document.getElementById('cidadeInput').value,
+                    CEP: document.getElementById('cepInput').value,
+                    UF: document.getElementById('ufInput').value,
+                    CodigoTelefone: document.getElementById('codigoTelefoneInput').value,
+                    NumeroTelefone: document.getElementById('numeroTelefoneInput').value,
+                    CodigoTipoTelefone: document.getElementById('codigoTipoTelefoneInput').value,
+                    Operadora: document.getElementById('operadoraInput').value,
+                    DescricaoTipoTelefone: document.getElementById('descricaoTipoTelefoneInput').value,
+                    usuarioInsercao: document.getElementById('usuarioInsercaoInput').value,
+                };
+
+                const url = `${GetBaseUrl()}Home/Update`;
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dataToSend)
+                })
+                    .then(response => {
+                        debugger;
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Falha ao salvar cliente. Status: ' + response.status);
+                        }
+                })
+                .then(data => {
+                    console.log('Resposta do servidor:', data);
+                    alert('Cliente salvo com sucesso!');
+                    window.location.href = '@Url.Action("Index", "Home")';
+                })
+                .catch(error => {
+                    console.error('Erro na requisição:', error);
+                    alert('Ocorreu um erro: ' + error.message);
+                });
+            });
+    });
+    </script>
+}

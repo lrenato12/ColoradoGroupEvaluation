@@ -1,5 +1,7 @@
 ﻿using ColoradoGroupEvaluation.Infra.Base;
 using ColoradoGroupEvaluation.Infra.Base.Database;
+using ColoradoGroupEvaluation.Shared.Models.Cliente.Domain;
+using ColoradoGroupEvaluation.Shared.Models.Cliente.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,17 +23,72 @@ public class ClienteDAL : BaseDAL, IClienteDAL
     #endregion
 
     #region [ METHODS ]
-  
+
     #region [ GET BY ID ]
-    public async Task<ClienteModel?> GetById(int telefoneId)
+    public async Task<ClienteResponseModel?> GetById(int id)
     {
-        return await _context.Clientes.FindAsync(telefoneId);
+        var query = _context.Clientes
+            .Where(c => c.CodigoCliente == id)
+            .SelectMany(
+                cliente => cliente.Telefones.DefaultIfEmpty(),
+                (cliente, telefone) => new { cliente, telefone }
+            );
+
+        var resultado = await query.Select(x => new ClienteResponseModel
+        {
+            CodigoCliente = x.cliente.CodigoCliente,
+            RazaoSocial = x.cliente.RazaoSocial,
+            NomeFantasia = x.cliente.NomeFantasia,
+            TipoPessoa = x.cliente.TipoPessoa,
+            Documento = x.cliente.Documento,
+            Endereco = x.cliente.Endereco,
+            Complemento = x.cliente.Complemento,
+            Bairro = x.cliente.Bairro,
+            Cidade = x.cliente.Cidade,
+            CEP = x.cliente.CEP,
+            UF = x.cliente.UF,
+            DataInsercao = x.cliente.DataInsercao,
+            UsuarioInsercao = x.cliente.UsuarioInsercao,
+
+            CodigoTelefone = (x.telefone == null) ? 0 : x.telefone.CodigoTelefone,
+            NumeroTelefone = (x.telefone == null) ? null : x.telefone.NumeroTelefone,
+            Operadora = (x.telefone == null) ? null : x.telefone.Operadora,
+            CodigoTipoTelefone = (x.telefone == null) ? 0 : x.telefone.CodigoTipoTelefone,
+        })
+        .FirstOrDefaultAsync();
+
+        return resultado;
     }
     #endregion
+
+    public async Task<ClienteModel?> ExistsItem(int id)
+    {
+        return await _context.Clientes.FindAsync(id);
+    }
 
     #region [ GET ALL ]
     public async Task<IEnumerable<ClienteModel>> GetAll()
     {
+        //var resultado = await _context.Clientes
+        //    .SelectMany(
+        //        cliente => cliente.Telefones.DefaultIfEmpty(),
+        //        (cliente, telefone) => new { cliente, telefone }
+        //    )
+        //    .Select(x => new ClienteResponseModel
+        //    {
+        //        CodigoCliente = x.cliente.CodigoCliente,
+        //        RazaoSocial = x.cliente.RazaoSocial,
+        //        NomeFantasia = x.cliente.NomeFantasia,
+        //        Documento = x.cliente.Documento,
+
+        //        NumeroTelefone = x.telefone == null ? null : x.telefone.NumeroTelefone,
+        //        Operadora = x.telefone == null ? null : x.telefone.Operadora,
+
+        //        DescricaoTipoTelefone = (x.telefone == null || x.telefone.NumeroTelefone == null)
+        //                                ? null
+        //                                : x.telefone.NumeroTelefone
+        //    })
+        //    .ToListAsync();
         return await _context.Clientes.AsNoTracking().ToListAsync();
     }
     #endregion
@@ -52,8 +109,6 @@ public class ClienteDAL : BaseDAL, IClienteDAL
         var existItem = await _context.Clientes.FindAsync(requestModel.CodigoCliente);
         if (existItem == null)
             throw new Exception("Nao foi possivel localizar o registro para deletar.");
-
-        requestModel.DataInsercao = existItem.DataInsercao;
 
         _context.Entry(existItem).CurrentValues.SetValues(requestModel);
 

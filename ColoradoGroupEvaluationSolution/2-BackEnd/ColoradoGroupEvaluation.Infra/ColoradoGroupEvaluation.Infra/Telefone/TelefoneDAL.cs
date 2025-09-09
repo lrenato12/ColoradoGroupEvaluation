@@ -29,9 +29,9 @@ public class TelefoneDAL : BaseDAL, ITelefoneDAL
     #endregion
 
     #region [ GET BY ID ]
-    public async Task<TelefoneModel?> GetById(string TelefoneId)
+    public async Task<TelefoneModel?> GetById(int id)
     {
-        return await _context.Telefones.FindAsync(TelefoneId);
+        return await _context.Telefones.FindAsync(id);
     }
     #endregion
 
@@ -68,9 +68,9 @@ public class TelefoneDAL : BaseDAL, ITelefoneDAL
     #endregion
 
     #region [ DELETE ]
-    public async Task<bool> Delete(string TelefoneId)
+    public async Task<bool> Delete(int id)
     {
-        var currentItem = await _context.Telefones.FindAsync(TelefoneId);
+        var currentItem = await _context.Telefones.FindAsync(id);
         if (currentItem == null)
             throw new Exception("Nao foi possivel localizar o registro para deletar.");
 

@@ -9,7 +9,7 @@ public interface ITelefoneDAL
     #endregion
 
     #region [ GET BY ID ]
-    Task<TelefoneModel?> GetById(string telefoneId);
+    Task<TelefoneModel?> GetById(int id);
     #endregion
 
     #region [ GET ALL ]
@@ -25,6 +25,6 @@ public interface ITelefoneDAL
     #endregion
 
     #region [ DELETE ]
-    Task<bool> Delete(string telefoneId);
+    Task<bool> Delete(int id);
     #endregion
 }

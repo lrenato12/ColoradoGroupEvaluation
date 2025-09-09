@@ -10,7 +10,7 @@ public interface ITelefoneManager
     #endregion
 
     #region [ GET BY ID ]
-    Task<ApiResultModel> GetById(string telefoneId);
+    Task<ApiResultModel> GetById(int id);
     #endregion
 
     #region [ GET ALL ]
@@ -26,6 +26,6 @@ public interface ITelefoneManager
     #endregion
 
     #region [ DELETE ]
-    Task<ApiResultModel> Delete(string telefoneId);
+    Task<ApiResultModel> Delete(int id);
     #endregion
 }

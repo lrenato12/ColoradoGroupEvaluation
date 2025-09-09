@@ -93,9 +93,34 @@ public class ClienteManager : BaseManager, IClienteManager
 
     public async Task<ApiResultModel> Update(ClienteRequestModel requestModel)
     {
-        var result = await _clienteDAL.Update(_mapper.Map<ClienteModel>(requestModel));
+        var currentData = await _clienteDAL.ExistsItem(requestModel.CodigoCliente);
+        if(currentData == null)
+            throw new Exception("Nao foi possivel localizar o registro para alterar.");
 
-        return new ApiResultModel().WithSuccess(result);
+        currentData.RazaoSocial = requestModel.RazaoSocial;
+        currentData.NomeFantasia = requestModel.NomeFantasia;
+        currentData.TipoPessoa = requestModel.TipoPessoa;
+        currentData.Documento = requestModel.Documento;
+        currentData.Endereco = requestModel.Endereco;
+        currentData.Complemento = requestModel.Complemento;
+        currentData.Bairro = requestModel.Bairro;
+        currentData.Cidade = requestModel.Cidade;
+        currentData.CEP = requestModel.CEP;
+        currentData.UF = requestModel.UF;
+
+        var currentDataTel = await _telefoneDAL.GetById(requestModel.CodigoTelefone);
+        if (currentDataTel == null)
+            throw new Exception("Nao foi possivel localizar o registro para alterar.");
+
+        currentDataTel.NumeroTelefone = requestModel.NumeroTelefone;
+        currentDataTel.CodigoTipoTelefone = requestModel.CodigoTipoTelefone;
+        currentDataTel.CodigoTelefone = requestModel.CodigoTelefone;
+
+        var result = await _telefoneDAL.Update(currentDataTel);
+
+        result = await _clienteDAL.Update(currentData);
+
+        return new ApiResultModel().WithSuccess(requestModel);
     }
     #endregion
 }
